@@ -27,7 +27,7 @@ set -euxo pipefail  # fail on error
 pushd $GITHUB_WORKSPACE/$SRC_FOLDER/$SOURCE_LOCATION
 imageTag=$(git log -n 1 --format="%H" -- ".")
 popd
-  
+echo "imageTag: $imageTag"  
 # If the image with the generated tag doesn't already exist, build it.
 if ! az acr repository show -n $AZ_ACR_NAME --image "$REPOSITORY:$imageTag" -o table; then
     echo No match found. Container will be built.
