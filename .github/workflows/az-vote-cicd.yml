@@ -47,7 +47,13 @@ jobs:
       uses: Azure/cli@1.0.4
       with:
         inlineScript:  |
+          echo "============================="
           git --version
+          echo "============================="
+          az acr repository list -n mtjacr001
+          echo "============================="
+          az acr repository show -n mtjacr001 --image azvote/azure-vote-back
+          echo "============================="
           chmod +x $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh
           $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh -f $SRC_FOLDER \
                                                            -g $GITHUB_WORKSPACE \
