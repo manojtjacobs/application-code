@@ -11,7 +11,7 @@ on:
 
 jobs:
   Build_Push_Azure_Vote_App_Image:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env:
       SRC_FOLDER: azure-vote
       IMAGE_REPO_NAME: azvote      
@@ -32,8 +32,6 @@ jobs:
       uses: Azure/cli@1.0.4
       with:
         inlineScript:  |
-          add-apt-repository ppa:git-core/ppa
-          apt update
           chmod +x $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh
           $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh -f $SRC_FOLDER \
                                                            -g $GITHUB_WORKSPACE \
