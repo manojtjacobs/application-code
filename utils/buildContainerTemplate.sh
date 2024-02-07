@@ -26,7 +26,8 @@ set -euxo pipefail  # fail on error
 # Running this command on windows-based infrastructure may return a different result due to CRLF
 pushd $GITHUB_WORKSPACE/$SRC_FOLDER/$SOURCE_LOCATION
 echo "============================="
-imageTag=$(git log -n 1 --format="%H" -- ".")
+# imageTag=$(git log -n 1 --format="%H" -- ".")
+imageTag=$(openssl rand -base64 10)
 popd
 echo "============================="
 # If the image with the generated tag doesn't already exist, build it.
