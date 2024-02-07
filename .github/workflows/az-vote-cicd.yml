@@ -48,7 +48,6 @@ jobs:
       with:
         inlineScript:  |
           echo "============================="
-          git --version
           echo "============================="
           az acr repository list -n mtjacr001
           echo "============================="
