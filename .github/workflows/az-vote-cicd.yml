@@ -28,6 +28,8 @@ jobs:
         echo "============================="
         az account show
         echo "============================="
+        git --version
+        echo "============================="
         sudo apt-get update
         # sudo apt-get install jq
         # sudo apt install git

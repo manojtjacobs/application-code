@@ -20,7 +20,13 @@ echo $TASKNAME
 echo $DOCKER_FILE
 
 set -euxo pipefail  # fail on error
-  
+
+sudo apt-get update
+# sudo apt-get install jq
+# sudo apt install git
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+sudo az aks install-cli
+
 # Generate an tag with a reproducible checksum of all files in . by doing a checksum of all files
 # in alphabetical order, then another checksum of their names and checksums.
 # Running this command on windows-based infrastructure may return a different result due to CRLF
