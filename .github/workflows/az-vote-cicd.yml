@@ -24,6 +24,10 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Install jq tool
       run: |
+        az version
+        echo "============================="
+        az account show
+        echo "============================="
         sudo apt-get update
         # sudo apt-get install jq
         # sudo apt install git
