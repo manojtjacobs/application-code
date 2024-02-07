@@ -30,11 +30,12 @@ jobs:
         echo "============================="
         git --version
         echo "============================="
-        sudo apt-get update
+        # sudo apt-get update
         # sudo apt-get install jq
         # sudo apt install git
-        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-        sudo az aks install-cli
+        # curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        # sudo az aks install-cli
+        az acr repository list -n mtjacr001
 
     - name: Create Frontend Image Tags
       env:
