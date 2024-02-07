@@ -22,11 +22,13 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-    # - name: Install jq tool
-    #   run: |
-    #     sudo apt-get update
-    #     sudo apt-get install jq
-    #     sudo apt install git
+    - name: Install jq tool
+      run: |
+        sudo apt-get update
+        # sudo apt-get install jq
+        # sudo apt install git
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        sudo az aks install-cli
 
     - name: Create Frontend Image Tags
       env:
