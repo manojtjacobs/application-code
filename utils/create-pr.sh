@@ -60,6 +60,7 @@ if [[ `git status --porcelain | head -1` ]]; then
     # Push to the deploy branch 
     echo "Push to the deploy branch $deploy_branch_name"
     echo "git push --set-upstream $repo_url $deploy_branch_name"
+    echo "$TOKEN"
     GITHUB_TOKEN=$TOKEN
     echo $GITHUB_TOKEN | gh auth login --with-token
     
