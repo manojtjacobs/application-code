@@ -26,6 +26,8 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install jq
+        sudo apt install git
+
     - name: Create Frontend Image Tags
       env:
         SOURCE_LOCATION: src/azure-vote-front 
@@ -36,6 +38,7 @@ jobs:
       uses: Azure/cli@1.0.4
       with:
         inlineScript:  |
+          git --version
           chmod +x $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh
           $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh -f $SRC_FOLDER \
                                                            -g $GITHUB_WORKSPACE \
