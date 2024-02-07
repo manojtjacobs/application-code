@@ -44,7 +44,7 @@ jobs:
         IMAGE_NAME: azure-vote-front
         TASKNAME: FRONTEND_IMAGE
         AZ_ACR_NAME: ${{ secrets.AZ_ACR_NAME }}   
-      uses: Azure/cli@1.0.4
+      uses: azure/CLI@v1
       with:
         inlineScript:  |
           echo "============================="
