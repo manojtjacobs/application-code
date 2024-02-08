@@ -36,6 +36,49 @@ jobs:
         # curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
         # sudo az aks install-cli
 
+    # - name: Create Frontend Image Tags
+    #   env:
+    #     SOURCE_LOCATION: src/azure-vote-front 
+    #     DOCKER_FILE: Dockerfile
+    #     IMAGE_NAME: azure-vote-front
+    #     TASKNAME: FRONTEND_IMAGE
+    #     AZ_ACR_NAME: ${{ secrets.AZ_ACR_NAME }}   
+    #   uses: azure/CLI@v1
+    #   with:
+    #     inlineScript:  |
+    #       echo "============================="
+    #       echo "============================="
+    #       az acr repository list -n mtjacr001
+    #       echo "============================="
+    #       az acr repository show -n mtjacr001 --image azvote/azure-vote-back
+    #       echo "============================="
+    #       chmod +x $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh
+    #       $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh -f $SRC_FOLDER \
+    #                                                        -g $GITHUB_WORKSPACE \
+    #                                                        -s $SOURCE_LOCATION \
+    #                                                        -u $AZ_ACR_NAME \
+    #                                                        -r $IMAGE_REPO_NAME/$IMAGE_NAME \
+    #                                                        -t $TASKNAME \
+    #                                                        -d $DOCKER_FILE
+    # - name: Create Backend Image Tags
+    #   env:
+    #     SOURCE_LOCATION: src/azure-vote-back
+    #     DOCKER_FILE: Dockerfile
+    #     IMAGE_NAME: azure-vote-back
+    #     TASKNAME: BACKEND_IMAGE
+    #     AZ_ACR_NAME: ${{ secrets.AZ_ACR_NAME }}   
+    #   uses: Azure/cli@1.0.4
+    #   with:
+    #     inlineScript:  |
+    #       chmod +x $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh
+    #       $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh -f $SRC_FOLDER \
+    #                                                        -g $GITHUB_WORKSPACE \
+    #                                                        -s $SOURCE_LOCATION \
+    #                                                        -u $AZ_ACR_NAME \
+    #                                                        -r $IMAGE_REPO_NAME/$IMAGE_NAME \
+    #                                                        -t $TASKNAME \
+    #                                                        -d $DOCKER_FILE
+    
     - name: Create Frontend Image Tags
       env:
         SOURCE_LOCATION: src/azure-vote-front 
@@ -43,9 +86,7 @@ jobs:
         IMAGE_NAME: azure-vote-front
         TASKNAME: FRONTEND_IMAGE
         AZ_ACR_NAME: ${{ secrets.AZ_ACR_NAME }}   
-      uses: azure/CLI@v1
-      with:
-        inlineScript:  |
+      run: |
           echo "============================="
           echo "============================="
           az acr repository list -n mtjacr001
@@ -67,9 +108,7 @@ jobs:
         IMAGE_NAME: azure-vote-back
         TASKNAME: BACKEND_IMAGE
         AZ_ACR_NAME: ${{ secrets.AZ_ACR_NAME }}   
-      uses: Azure/cli@1.0.4
-      with:
-        inlineScript:  |
+      run: |
           chmod +x $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh
           $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh -f $SRC_FOLDER \
                                                            -g $GITHUB_WORKSPACE \
@@ -78,6 +117,7 @@ jobs:
                                                            -r $IMAGE_REPO_NAME/$IMAGE_NAME \
                                                            -t $TASKNAME \
                                                            -d $DOCKER_FILE
+
     - name: Upload Image Tags
       uses: actions/upload-artifact@v2.2.2
       with:
