@@ -27,6 +27,8 @@ mkdir -p $2/$TARGET_CLUSTER/manifests/$TARGET_NAMESPACE
 # demo-cluster/templates/dev/azure-vote-app/helm
 mkdir -p $2/$TARGET_CLUSTER/templates/$TARGET_NAMESPACE
 
+echo "$$2/$TARGET_CLUSTER/templates/$TARGET_NAMESPACE"
+echo "$image_tags"
 # Substitute env variables in all yaml files in the manifest folder
 for file in `find $1 -name '*.yaml'`; do envsubst <"$file" > "$file"1 && mv "$file"1 "$file"; done
 
