@@ -37,6 +37,8 @@ jobs:
           echo "============================="
           az acr repository show -n $AZ_ACR_NAME --image azvote/azure-vote-back
           echo "============================="
+          echo "Image: $IMAGE_REPO_NAME/$IMAGE_NAME"
+          echo "============================="
           chmod +x $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh
           $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh -f $SRC_FOLDER \
                                                            -g $GITHUB_WORKSPACE \
@@ -54,6 +56,8 @@ jobs:
         AZ_ACR_NAME: ${{ secrets.AZ_ACR_NAME }}   
       run: |
           chmod +x $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh
+          echo "Image: $IMAGE_REPO_NAME/$IMAGE_NAME"
+          echo "============================="
           $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh -f $SRC_FOLDER \
                                                            -g $GITHUB_WORKSPACE \
                                                            -s $SOURCE_LOCATION \
