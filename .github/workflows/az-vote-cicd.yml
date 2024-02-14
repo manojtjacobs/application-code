@@ -130,32 +130,10 @@ jobs:
       with: 
         app-id: ${{ secrets.GH_ID_01 }}
         private-key: ${{ secrets.GH_KEY_01 }}
-          
-    # - uses: tibdex/github-app-token@v1
-    #   id: get_installation_token
-    #   with: 
-    #     app_id: ${{ secrets.GH_ID_01 }}
-    #     private_key: ${{ secrets.GH_KEY_01 }}
-
-    # - uses: repo-sync/pull-request@v2
-    #   name: pull-request
-    #   with:
-    #     destination_branch: "main"
-    #     pr_title: "Pulling ${{ github.ref }} into main"
-    #     pr_body: ":crown: *An automated PR*"
-    #     pr_reviewer: "kingdonb"
-    #     pr_draft: true
-    #     github_token: ${{ secrets.GITHUB_TOKEN }}
-
-    # - name: Clone Repository
-    #   run: | 
-    #     mkdir my-repo-2 && cd my-repo-2
-    #     git clone https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/my-org/my-repo.git
-
 
     - name: Create PR
       env:
-        GH_TOKEN: ${{ steps.get_installation_token.outputs.token }}
+        GH_TOKEN: ${{ steps.app-token.outputs.token }}
       run: |
         # Extract release number from the branch name
         # If it is a release branch, add a prefix to the manifests branch
