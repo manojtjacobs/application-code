@@ -136,6 +136,7 @@ jobs:
         GH_TOKEN: ${{ steps.app-token.outputs.token }}
       run: |
         # Extract release number from the branch name
+        
         # If it is a release branch, add a prefix to the manifests branch
         echo $GITHUB_REF | awk -F"release/" '{print $2}' 
         release_number=$(echo $GITHUB_REF | awk -F"release/" '{print $2}')
