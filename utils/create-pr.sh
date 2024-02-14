@@ -56,14 +56,14 @@ git add -A
 git status
 if [[ `git status --porcelain | head -1` ]]; then
     git commit -m "deployment $DEPLOY_ID"
-
+    repo_url="https://github.com/manojtjacobs/gitops-code"
     # Push to the deploy branch 
     echo "Push to the deploy branch $deploy_branch_name"
     echo "git push --set-upstream $repo_url $deploy_branch_name"
     # echo "$TOKEN"
     # GITHUB_TOKEN=$TOKEN
     # echo $GITHUB_TOKEN | gh auth login --with-token
-    repo_url="orgin"
+    
     git push --set-upstream $repo_url $deploy_branch_name
     echo "============================================="
     # Create a PR 
