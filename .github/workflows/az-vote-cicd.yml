@@ -131,8 +131,7 @@ jobs:
         app-id: ${{ secrets.GH_ID_01 }}
         private-key: ${{ secrets.GH_KEY_01 }}
           
-    - if: ${{ steps.check-approval.outputs.approved == 'false' }}
-      name: Create PR
+    - name: Create PR
       uses: peter-evans/create-or-update-comment@v1
       with:
         token: ${{ steps.app-token.outputs.token }}
