@@ -63,7 +63,7 @@ if [[ `git status --porcelain | head -1` ]]; then
     # echo "$TOKEN"
     # GITHUB_TOKEN=$TOKEN
     # echo $GITHUB_TOKEN | gh auth login --with-token
-    
+    repo_url="orgin"
     git push --set-upstream $repo_url $deploy_branch_name
     echo "============================================="
     # Create a PR 
