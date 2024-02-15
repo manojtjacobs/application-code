@@ -156,32 +156,107 @@ jobs:
         ENVIRONMENT_NAME: Dev
         BACKEND_IMAGE: 6.0.8
       run: |
-        # Extract release number from the branch name
-        
-        # If it is a release branch, add a prefix to the manifests branch
-
-        echo $GITHUB_REF | awk -F"release/" '{print $2}' 
-        release_number=$(echo $GITHUB_REF | awk -F"release/" '{print $2}')
-        [[ -z "$release_number" ]] || release_prefix=release/$release_number/  
-
-        ${{ github.workspace }}/utils/create-pr.sh -s ${{ github.workspace }}/gen_manifests -d $MANIFESTS_FOLDER -r $MANIFESTS_REPO -b $(echo $release_prefix)$MANIFESTS_BRANCH -i $GITHUB_RUN_ID -t $GH_TOKEN -e $ENVIRONMENT_NAME
-        echo "Push to the deploy branch $deploy_branch_name"
-        echo "git push --set-upstream $repo_url $deploy_branch_name"
-        git push --set-upstream $repo_url $deploy_branch_name
+        echo "List input params"
+        SOURCE_FOLDER=${{ github.workspace }}/gen_manifests
+        echo $SOURCE_FOLDER
+        DEST_FOLDER=$MANIFESTS_FOLDER
+        echo $DEST_FOLDER
+        DEST_REPO=$MANIFESTS_REPO
+        echo $DEST_REPO
         DEST_BRANCH=$(echo $release_prefix)$MANIFESTS_BRANCH
-        echo "Dest_branch: $(echo $release_prefix)$MANIFESTS_BRANCH"
-        echo "DEST_BRANCH: $DEST_BRANCH"
-        # Create a PR 
-        echo "Create a PR to $DEST_BRANCH"
-        DEPLOY_ID=$GITHUB_RUN_I
-        echo "DEPLOY_ID: $DEPLOY_ID"
-        ENV_NAME=$ENVIRONMENT_NAME
-        echo "ENV_NAME: $ENV_NAME"
+        echo $DEST_BRANCH
+        DEPLOY_ID=$GITHUB_RUN_ID
+        echo $DEPLOY_ID
+        ENV_NAME=$ENVIRONMENT
+        echo $ENV_NAME
+        echo "end of list"
+
+        set -euo pipefail  # fail on error
+
+        pr_user_name="Git Ops"
+        pr_user_email="agent@gitops.com"
+
+        git config --global user.email $pr_user_email
+        git config --global user.name $pr_user_name
+
+        # Clone manifests repo
+        echo "Clone manifests repo"
+        repo_url="${DEST_REPO#http://}"
+        repo_url="${DEST_REPO#https://}"
+        repo_url="https://automated:$TOKEN@$repo_url"
+
+        echo "git clone $repo_url -b $DEST_BRANCH --depth 1 --single-branch"
+        git clone $repo_url -b $DEST_BRANCH --depth 1 --single-branch
+        repo=${DEST_REPO##*/}
+        repo_name=${repo%.*}
+        cd "$repo_name"
+        echo "git status"
+        git status
+
+        # Create a new branch 
         deploy_branch_name=deploy/$DEPLOY_ID/$BACKEND_IMAGE/$DEST_BRANCH
 
+        echo "Create a new branch $deploy_branch_name"
+        git checkout -b $deploy_branch_name
+
+        # Add generated manifests to the new deploy branch
+        mkdir -p $DEST_FOLDER
+        cp -r $SOURCE_FOLDER/* $DEST_FOLDER/
+        git add -A
+        git status
+        if [[ `git status --porcelain | head -1` ]]; then
+            git commit -m "deployment $DEPLOY_ID"
+
+            Push to the deploy branch 
+            echo "Push to the deploy branch $deploy_branch_name"
+            echo "git push --set-upstream $repo_url $deploy_branch_name"
+            git push --set-upstream $repo_url $deploy_branch_name
+
+            # Create a PR 
+            echo "Create a PR to $DEST_BRANCH"
+            
+            owner_repo="${DEST_REPO#https://github.com/}"
+            echo $owner_repo
+            # GITHUB_TOKEN=$TOKEN
+            # echo $GITHUB_TOKEN | gh auth login --with-token
+            gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment '$DEPLOY_ID'" --body "Deploy to '$ENV_NAME'"
+        fi 
+
+    # - name: Create PR
+    #   env:
+    #     GH_TOKEN: ${{ steps.app-token.outputs.token }}
+    #     # GH_TOKEN: "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"
+    #     MANIFESTS_FOLDER: arc-cicd-cluster
+    #     MANIFESTS_REPO: https://github.com/manojtjacobs/gitops-code
+    #     MANIFESTS_BRANCH: master
+    #     ENVIRONMENT_NAME: Dev
+    #     BACKEND_IMAGE: 6.0.8
+    #   run: |
+    #     # Extract release number from the branch name
         
-        owner_repo="${DEST_REPO#https://github.com/}"
-        echo $owner_repo
-        # GITHUB_TOKEN=$TOKEN
-        # echo $GITHUB_TOKEN | gh auth login --with-token
-        gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment $GITHUB_RUN_ID" --body "Deploy to $ENV_NAME"
+    #     # If it is a release branch, add a prefix to the manifests branch
+
+    #     echo $GITHUB_REF | awk -F"release/" '{print $2}' 
+    #     release_number=$(echo $GITHUB_REF | awk -F"release/" '{print $2}')
+    #     [[ -z "$release_number" ]] || release_prefix=release/$release_number/  
+
+    #     ${{ github.workspace }}/utils/create-pr.sh -s ${{ github.workspace }}/gen_manifests -d $MANIFESTS_FOLDER -r $MANIFESTS_REPO -b $(echo $release_prefix)$MANIFESTS_BRANCH -i $GITHUB_RUN_ID -t $GH_TOKEN -e $ENVIRONMENT_NAME
+    #     echo "Push to the deploy branch $deploy_branch_name"
+    #     echo "git push --set-upstream $repo_url $deploy_branch_name"
+    #     git push --set-upstream $repo_url $deploy_branch_name
+    #     DEST_BRANCH=$(echo $release_prefix)$MANIFESTS_BRANCH
+    #     echo "Dest_branch: $(echo $release_prefix)$MANIFESTS_BRANCH"
+    #     echo "DEST_BRANCH: $DEST_BRANCH"
+    #     # Create a PR 
+    #     echo "Create a PR to $DEST_BRANCH"
+    #     DEPLOY_ID=$GITHUB_RUN_ID
+    #     echo "DEPLOY_ID: $DEPLOY_ID"
+    #     ENV_NAME=$ENVIRONMENT_NAME
+    #     echo "ENV_NAME: $ENV_NAME"
+    #     deploy_branch_name=deploy/$DEPLOY_ID/$BACKEND_IMAGE/$DEST_BRANCH
+      
+    #     owner_repo="${DEST_REPO#https://github.com/}"
+    #     echo $owner_repo
+    #     # GITHUB_TOKEN=$TOKEN
+    #     # echo $GITHUB_TOKEN | gh auth login --with-token
+    #     gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment $GITHUB_RUN_ID" --body "Deploy to $ENV_NAME"

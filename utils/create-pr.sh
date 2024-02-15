@@ -57,17 +57,17 @@ git status
 if [[ `git status --porcelain | head -1` ]]; then
     git commit -m "deployment $DEPLOY_ID"
 
-    # Push to the deploy branch 
-    # echo "Push to the deploy branch $deploy_branch_name"
-    # echo "git push --set-upstream $repo_url $deploy_branch_name"
-    # git push --set-upstream $repo_url $deploy_branch_name
+    Push to the deploy branch 
+    echo "Push to the deploy branch $deploy_branch_name"
+    echo "git push --set-upstream $repo_url $deploy_branch_name"
+    git push --set-upstream $repo_url $deploy_branch_name
 
-    # # Create a PR 
-    # echo "Create a PR to $DEST_BRANCH"
+    # Create a PR 
+    echo "Create a PR to $DEST_BRANCH"
     
-    # owner_repo="${DEST_REPO#https://github.com/}"
-    # echo $owner_repo
-    # GITHUB_TOKEN=$TOKEN
-    # echo $GITHUB_TOKEN | gh auth login --with-token
-    # gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment '$DEPLOY_ID'" --body "Deploy to '$ENV_NAME'"
+    owner_repo="${DEST_REPO#https://github.com/}"
+    echo $owner_repo
+    GITHUB_TOKEN=$TOKEN
+    echo $GITHUB_TOKEN | gh auth login --with-token
+    gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment '$DEPLOY_ID'" --body "Deploy to '$ENV_NAME'"
 fi 
