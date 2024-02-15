@@ -145,7 +145,7 @@ jobs:
         GH_TOKEN: ${{ steps.generate-token.outputs.token }}
       run: |
         gh api octocat
-        gh repo view manojtjacobs/gitops-code --json nameWithOwner,refs
+        gh repo view manojtjacobs/gitops-code --json nameWithOwner,defaultBranchRef
 
     - name: Create PR
       env:
