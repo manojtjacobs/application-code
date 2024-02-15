@@ -172,6 +172,8 @@ jobs:
         echo "DEST_BRANCH: $DEST_BRANCH"
         # Create a PR 
         echo "Create a PR to $DEST_BRANCH"
+        DEPLOY_ID=$GITHUB_RUN_I
+        ENV_NAME=$ENVIRONMENT_NAME
         
         owner_repo="${DEST_REPO#https://github.com/}"
         echo $owner_repo
