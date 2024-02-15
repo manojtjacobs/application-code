@@ -139,6 +139,7 @@ jobs:
       with:
         app-id: ${{ secrets.GH_ID_01 }}
         private-key: ${{ secrets.GH_KEY_01 }}
+        owner: ${{ github.repository_owner }}
 
     - name: Use the token
       env:
@@ -171,6 +172,7 @@ jobs:
         ENV_NAME=$ENVIRONMENT
         echo $ENV_NAME
         TOKEN=$GH_TOKEN
+        echo "$GH_TOKEN"
         echo "end of list"
 
         set -euo pipefail  # fail on error
