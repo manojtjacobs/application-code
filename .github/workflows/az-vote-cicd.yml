@@ -154,6 +154,7 @@ jobs:
         MANIFESTS_REPO: https://github.com/manojtjacobs/gitops-code
         MANIFESTS_BRANCH: master
         ENVIRONMENT_NAME: Dev
+        BACKEND_IMAGE: 6.0.8
       run: |
         # Extract release number from the branch name
         
@@ -176,9 +177,11 @@ jobs:
         echo "DEPLOY_ID: $DEPLOY_ID"
         ENV_NAME=$ENVIRONMENT_NAME
         echo "ENV_NAME: $ENV_NAME"
+        deploy_branch_name=deploy/$DEPLOY_ID/$BACKEND_IMAGE/$DEST_BRANCH
+
         
         owner_repo="${DEST_REPO#https://github.com/}"
         echo $owner_repo
         # GITHUB_TOKEN=$TOKEN
         # echo $GITHUB_TOKEN | gh auth login --with-token
-        gh pr create --base $DEST_BRANCH --head $deploy_branch_name #--title "deployment" --body "Deployto$ENV_NAME"
+        gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment $GITHUB_RUN_ID" --body "Deploy to $ENV_NAME"
