@@ -57,7 +57,7 @@ git status
 if [[ `git status --porcelain | head -1` ]]; then
     git commit -m "deployment $DEPLOY_ID"
 
-    Push to the deploy branch 
+    # Push to the deploy branch 
     echo "Push to the deploy branch $deploy_branch_name"
     echo "git push --set-upstream $repo_url $deploy_branch_name"
     git push --set-upstream $repo_url $deploy_branch_name
