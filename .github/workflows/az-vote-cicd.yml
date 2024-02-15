@@ -151,7 +151,7 @@ jobs:
     - name: Create PR
       env:
         GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        TOKEN1: "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"
+        # TOKEN1: "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"
         MANIFESTS_FOLDER: arc-cicd-cluster
         MANIFESTS_REPO: https://github.com/manojtjacobs/gitops-code
         MANIFESTS_BRANCH: master
@@ -228,6 +228,7 @@ jobs:
             echo $owner_repo
             # GITHUB_TOKEN=$TOKEN
             # echo $GITHUB_TOKEN | gh auth login --with-token
+            repo_url="https://github.com/manojtjacobs/gitops-code.git"
             gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment '$DEPLOY_ID'" --body "Deploy to '$ENV_NAME'"
         fi 
 
