@@ -32,11 +32,8 @@ git config --global user.name $pr_user_name
 # Clone manifests repo
 echo "Clone manifests repo"
 repo_url="${DEST_REPO#http://}"
-echo "repo_url: $repo_url"
 repo_url="${DEST_REPO#https://}"
-echo "repo_url: $repo_url"
 repo_url="https://automated:$TOKEN@$repo_url"
-echo "repo_url: $repo_url"
 
 echo "git clone $repo_url -b $DEST_BRANCH --depth 1 --single-branch"
 git clone $repo_url -b $DEST_BRANCH --depth 1 --single-branch
@@ -51,6 +48,7 @@ deploy_branch_name=deploy/$DEPLOY_ID/$BACKEND_IMAGE/$DEST_BRANCH
 
 echo "Create a new branch $deploy_branch_name"
 git checkout -b $deploy_branch_name
+
 # Add generated manifests to the new deploy branch
 mkdir -p $DEST_FOLDER
 cp -r $SOURCE_FOLDER/* $DEST_FOLDER/
@@ -62,16 +60,14 @@ if [[ `git status --porcelain | head -1` ]]; then
     # Push to the deploy branch 
     # echo "Push to the deploy branch $deploy_branch_name"
     # echo "git push --set-upstream $repo_url $deploy_branch_name"
-    # # git push --set-upstream $repo_url $deploy_branch_name
-    # echo "deploy_branch_name: $deploy_branch_name"
-    # git push https://$TOKEN@github.com/manojtjacobs/gitops-code.git
-    # # git push $repo_url $deploy_branch_name
+    # git push --set-upstream $repo_url $deploy_branch_name
+
     # # Create a PR 
     # echo "Create a PR to $DEST_BRANCH"
     
     # owner_repo="${DEST_REPO#https://github.com/}"
     # echo $owner_repo
-    # # GITHUB_TOKEN=$TOKEN
-    # # echo $GITHUB_TOKEN | gh auth login --with-token
+    # GITHUB_TOKEN=$TOKEN
+    # echo $GITHUB_TOKEN | gh auth login --with-token
     # gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment '$DEPLOY_ID'" --body "Deploy to '$ENV_NAME'"
 fi 
