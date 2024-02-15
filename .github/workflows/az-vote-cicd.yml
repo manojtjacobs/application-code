@@ -163,7 +163,7 @@ jobs:
         release_number=$(echo $GITHUB_REF | awk -F"release/" '{print $2}')
         [[ -z "$release_number" ]] || release_prefix=release/$release_number/  
 
-        ${{ github.workspace }}/utils/create-pr.sh -s ${{ github.workspace }}/gen_manifests -d $MANIFESTS_FOLDER -r $MANIFESTS_REPO -b $(echo $release_prefix)$MANIFESTS_BRANCH -i $GITHUB_RUN_ID -e $ENVIRONMENT_NAME
+        ${{ github.workspace }}/utils/create-pr.sh -s ${{ github.workspace }}/gen_manifests -d $MANIFESTS_FOLDER -r $MANIFESTS_REPO -b $(echo $release_prefix)$MANIFESTS_BRANCH -i $GITHUB_RUN_ID -t $GH_TOKEN -e $ENVIRONMENT_NAME
 
         git push https://$GH_TOKEN@github.com/manojtjacobs/gitops-code.git
 
