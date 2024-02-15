@@ -169,6 +169,7 @@ jobs:
         echo $DEPLOY_ID
         ENV_NAME=$ENVIRONMENT
         echo $ENV_NAME
+        TOKEN=$GH_TOKEN
         echo "end of list"
 
         set -euo pipefail  # fail on error
