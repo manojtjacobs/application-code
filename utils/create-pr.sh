@@ -48,7 +48,6 @@ deploy_branch_name=deploy/$DEPLOY_ID/$BACKEND_IMAGE/$DEST_BRANCH
 
 echo "Create a new branch $deploy_branch_name"
 git checkout -b $deploy_branch_name
-
 # Add generated manifests to the new deploy branch
 mkdir -p $DEST_FOLDER
 cp -r $SOURCE_FOLDER/* $DEST_FOLDER/
