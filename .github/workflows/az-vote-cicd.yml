@@ -198,7 +198,7 @@ jobs:
         repo=${DEST_REPO##*/}
         repo_name=${repo%.*}
         cd "$repo_name"
-        echo "git status"
+        # echo "git status"
         git status
 
         # Create a new branch 
