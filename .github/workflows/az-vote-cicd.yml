@@ -151,7 +151,7 @@ jobs:
     - name: Create PR
       env:
         GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        # GH_TOKEN: "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"
+        TOKEN1: "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"
         MANIFESTS_FOLDER: arc-cicd-cluster
         MANIFESTS_REPO: https://github.com/manojtjacobs/gitops-code
         MANIFESTS_BRANCH: master
@@ -180,6 +180,9 @@ jobs:
         pr_user_name="Git Ops"
         pr_user_email="agent@gitops.com"
 
+        pr_user_name="manojtjacobs"
+        pr_user_email="manjacob@microsoft.com.com"
+
         git config --global user.email $pr_user_email
         git config --global user.name $pr_user_name
 
@@ -189,7 +192,7 @@ jobs:
         repo_url="${DEST_REPO#https://}"
         repo_url="https://automated:$TOKEN@$repo_url.git"
         
-        repo_url="https://github.com/manojtjacobs/gitops-code.git"
+        # repo_url="https://github.com/manojtjacobs/gitops-code.git"
         
         echo "git clone $repo_url -b $DEST_BRANCH --depth 1 --single-branch"
         git clone $repo_url -b $DEST_BRANCH --depth 1 --single-branch
