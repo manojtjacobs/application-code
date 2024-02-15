@@ -4,7 +4,10 @@ name: CD_Stage
 on:
   repository_dispatch:
     types: [sync-success]
-
+  push:
+    branches:
+      - master
+      
 jobs:
   Test_Dev:
     name: "Test Dev"
