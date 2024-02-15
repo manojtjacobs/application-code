@@ -35,7 +35,7 @@ repo_url="${DEST_REPO#http://}"
 echo "repo_url: $repo_url"
 repo_url="${DEST_REPO#https://}"
 echo "repo_url: $repo_url"
-repo_url="https://automated:$TOKEN@$repo_url"
+# repo_url="https://automated:$TOKEN@$repo_url"
 echo "repo_url: $repo_url"
 
 echo "git clone $repo_url -b $DEST_BRANCH --depth 1 --single-branch"
@@ -69,7 +69,7 @@ if [[ `git status --porcelain | head -1` ]]; then
     
     owner_repo="${DEST_REPO#https://github.com/}"
     echo $owner_repo
-    # GITHUB_TOKEN=$TOKEN
-    # echo $GITHUB_TOKEN | gh auth login --with-token
+    GITHUB_TOKEN=$TOKEN
+    echo $GITHUB_TOKEN | gh auth login --with-token
     gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment '$DEPLOY_ID'" --body "Deploy to '$ENV_NAME'"
 fi 
