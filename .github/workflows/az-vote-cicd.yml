@@ -137,7 +137,7 @@ jobs:
       env:
         GH_TOKEN: ${{ steps.app-token.outputs.token }}
         MANIFESTS_FOLDER: arc-cicd-cluster
-        MANIFESTS_REPO: https://github.com/manojtjacobs/gitops-code
+        MANIFESTS_REPO: https://github.com/manojtjacobs/gitops-code.git
         MANIFESTS_BRANCH: master
         ENVIRONMENT_NAME: Dev
       run: |
