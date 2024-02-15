@@ -167,12 +167,14 @@ jobs:
         echo "Push to the deploy branch $deploy_branch_name"
         echo "git push --set-upstream $repo_url $deploy_branch_name"
         git push --set-upstream $repo_url $deploy_branch_name
-
+        DEST_BRANCH=$(echo $release_prefix)$MANIFESTS_BRANCH
+        echo "Dest_branch: $(echo $release_prefix)$MANIFESTS_BRANCH"
+        echo "DEST_BRANCH: $DEST_BRANCH"
         # Create a PR 
-        echo "Create a PR to $DEST_BRANCH"
+        echo "Create a PR to $(echo $release_prefix)$MANIFESTS_BRANCH"
         
         owner_repo="${DEST_REPO#https://github.com/}"
         echo $owner_repo
         GITHUB_TOKEN=$TOKEN
         echo $GITHUB_TOKEN | gh auth login --with-token
-        gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment '$DEPLOY_ID'" --body "Deploy to '$ENV_NAME'"
+        gh pr create --base $(echo $release_prefix)$MANIFESTS_BRANCH --head $deploy_branch_name --title "deployment '$DEPLOY_ID'" --body "Deploy to '$ENV_NAME'"
