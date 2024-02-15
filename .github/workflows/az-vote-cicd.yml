@@ -127,11 +127,24 @@ jobs:
         AZURE_VOTE_IMAGE_REPO: mtjacr001.azurecr.io/${{ env.IMAGE_REPO_NAME }}
         SYSTEM_LABEL: ${{ secrets.SYSTEM_LABEL }}
     
-    - uses: actions/create-github-app-token@v1
-      id: app-token
-      with: 
+    # - uses: actions/create-github-app-token@v1
+    #   id: app-token
+    #   with: 
+    #     app-id: ${{ secrets.GH_ID_01 }}
+    #     private-key: ${{ secrets.GH_KEY_01 }}
+
+    - name: Generate a token
+      id: generate-token
+      uses: actions/create-github-app-token@v1
+      with:
         app-id: ${{ secrets.GH_ID_01 }}
         private-key: ${{ secrets.GH_KEY_01 }}
+
+    - name: Use the token
+      env:
+        GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+      run: |
+        gh api octocat
 
     - name: Create PR
       env:
@@ -149,7 +162,16 @@ jobs:
         echo $GITHUB_REF | awk -F"release/" '{print $2}' 
         release_number=$(echo $GITHUB_REF | awk -F"release/" '{print $2}')
         [[ -z "$release_number" ]] || release_prefix=release/$release_number/  
-        # ${{ github.workspace }}/utils/create-pr.sh -s ${{ github.workspace }}/gen_manifests -d ${{ secrets.MANIFESTS_FOLDER }} -r ${{ secrets.MANIFESTS_REPO }} -b $(echo $release_prefix)${{ secrets.MANIFESTS_BRANCH }} -i $GITHUB_RUN_ID -t $GH_TOKEN -e ${{ secrets.ENVIRONMENT_NAME }}
 
-        ${{ github.workspace }}/utils/create-pr.sh -s ${{ github.workspace }}/gen_manifests -d $MANIFESTS_FOLDER -r $MANIFESTS_REPO -b $(echo $release_prefix)$MANIFESTS_BRANCH -i $GITHUB_RUN_ID -t $GH_TOKEN -e $ENVIRONMENT_NAME
+        ${{ github.workspace }}/utils/create-pr.sh -s ${{ github.workspace }}/gen_manifests -d $MANIFESTS_FOLDER -r $MANIFESTS_REPO -b $(echo $release_prefix)$MANIFESTS_BRANCH -i $GITHUB_RUN_ID -e $ENVIRONMENT_NAME
 
+        git push https://$GH_TOKEN@github.com/manojtjacobs/gitops-code.git
+
+        # Create a PR 
+        echo "Create a PR to $DEST_BRANCH"
+        
+        owner_repo="${DEST_REPO#https://github.com/}"
+        echo $owner_repo
+        # GITHUB_TOKEN=$TOKEN
+        # echo $GITHUB_TOKEN | gh auth login --with-token
+        gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment '$DEPLOY_ID'" --body "Deploy to '$ENV_NAME'"
