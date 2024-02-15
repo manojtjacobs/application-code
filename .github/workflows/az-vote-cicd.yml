@@ -120,7 +120,8 @@ jobs:
         ${{ github.workspace }}/utils/generate-manifests.sh manifests gen_manifests
       env:
         TARGET_NAMESPACE: ${{ secrets.TARGET_NAMESPACE }}
-        VOTE_APP_TITLE: ${{ secrets.VOTE_APP_TITLE }}
+        # VOTE_APP_TITLE: ${{ secrets.VOTE_APP_TITLE }}
+        VOTE_APP_TITLE : "Voting Application"
         DEMO_APP_URL: ${{ secrets.DEMO_APP_URL }}
         # AZURE_VOTE_IMAGE_REPO: ${{ secrets.AZ_ACR_NAME }}/.azurecr.io/${{ env.IMAGE_REPO_NAME }}
         AZURE_VOTE_IMAGE_REPO: mtjacr001.azurecr.io/${{ env.IMAGE_REPO_NAME }}
@@ -135,8 +136,8 @@ jobs:
     - name: Create PR
       env:
         GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        MANIFESTS_FOLDER: azure-vote-manifests
-        MANIFESTS_REPO: arc-cicd-demo-gitops
+        MANIFESTS_FOLDER: arc-cicd-cluster
+        MANIFESTS_REPO: https://github.com/manojtjacobs/gitops-code
         MANIFESTS_BRANCH: master
         ENVIRONMENT_NAME: Dev
       run: |
