@@ -171,10 +171,10 @@ jobs:
         echo "Dest_branch: $(echo $release_prefix)$MANIFESTS_BRANCH"
         echo "DEST_BRANCH: $DEST_BRANCH"
         # Create a PR 
-        echo "Create a PR to $(echo $release_prefix)$MANIFESTS_BRANCH"
+        echo "Create a PR to $DEST_BRANCH"
         
         owner_repo="${DEST_REPO#https://github.com/}"
         echo $owner_repo
-        GITHUB_TOKEN=$TOKEN
-        echo $GITHUB_TOKEN | gh auth login --with-token
-        gh pr create --base $(echo $release_prefix)$MANIFESTS_BRANCH --head $deploy_branch_name --title "deployment '$DEPLOY_ID'" --body "Deploy to '$ENV_NAME'"
+        # GITHUB_TOKEN=$TOKEN
+        # echo $GITHUB_TOKEN | gh auth login --with-token
+        gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment '$DEPLOY_ID'" --body "Deploy to '$ENV_NAME'"
