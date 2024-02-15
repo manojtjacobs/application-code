@@ -181,4 +181,4 @@ jobs:
         echo $owner_repo
         # GITHUB_TOKEN=$TOKEN
         # echo $GITHUB_TOKEN | gh auth login --with-token
-        gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment '$DEPLOY_ID'" --body "Deploy to '$ENV_NAME'"
+        gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment '$GITHUB_RUN_ID'" --body "Deploy to '$ENV_NAME'"
