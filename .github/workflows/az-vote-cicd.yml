@@ -152,7 +152,8 @@ jobs:
         GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         # TOKEN1: "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"
         MANIFESTS_FOLDER: arc-cicd-cluster
-        MANIFESTS_REPO: https://github.com/manojtjacobs/gitops-code
+        # MANIFESTS_REPO: https://github.com/manojtjacobs/gitops-code
+        MANIFESTS_REPO: https://github.com/manojtjacobs/arc-cicd-demo-gitops
         MANIFESTS_BRANCH: master
         ENVIRONMENT_NAME: Dev
         # BACKEND_IMAGE: 6.0.8
@@ -189,7 +190,7 @@ jobs:
         echo "Clone manifests repo"
         repo_url="${DEST_REPO#http://}"
         repo_url="${DEST_REPO#https://}"
-        repo_url="https://automated:$TOKEN@$repo_url"
+        repo_url="https://automated:$TOKEN@$repo_url.git"
         
         # repo_url="https://github.com/manojtjacobs/gitops-code.git"
         
