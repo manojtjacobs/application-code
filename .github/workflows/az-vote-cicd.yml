@@ -189,7 +189,7 @@ jobs:
         echo "Clone manifests repo"
         repo_url="${DEST_REPO#http://}"
         repo_url="${DEST_REPO#https://}"
-        repo_url="https://automated:$TOKEN@$repo_url.git"
+        repo_url="https://automated:$TOKEN@$repo_url"
         
         # repo_url="https://github.com/manojtjacobs/gitops-code.git"
         
@@ -227,7 +227,7 @@ jobs:
             echo $owner_repo
             # GITHUB_TOKEN=$TOKEN
             # echo $GITHUB_TOKEN | gh auth login --with-token
-            repo_url="https://github.com/manojtjacobs/gitops-code.git"
+            # repo_url="https://github.com/manojtjacobs/gitops-code.git"
             gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment '$DEPLOY_ID'" --body "Deploy to '$ENV_NAME'"
         fi 
 
