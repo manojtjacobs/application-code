@@ -137,7 +137,8 @@ jobs:
       id: generate-token
       uses: actions/create-github-app-token@v1
       with:
-        app-id: ${{ secrets.GH_ID_01 }}
+        # app-id: ${{ secrets.GH_ID_01 }}
+        app-id: 123456
         private-key: ${{ secrets.GH_KEY_01 }}
 
     - name: Use the token
