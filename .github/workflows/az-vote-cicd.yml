@@ -125,12 +125,6 @@ jobs:
         AZURE_VOTE_IMAGE_REPO: ${{ secrets.AZ_ACR_NAME }}.azurecr.io${{ env.IMAGE_REPO_NAME }}
         # AZURE_VOTE_IMAGE_REPO: mtjacr001.azurecr.io/${{ env.IMAGE_REPO_NAME }}
         SYSTEM_LABEL: ${{ secrets.SYSTEM_LABEL }}
-    
-    # - uses: actions/create-github-app-token@v1
-    #   id: app-token
-    #   with: 
-    #     app-id: ${{ secrets.GH_ID_01 }}
-    #     private-key: ${{ secrets.GH_KEY_01 }}
 
     - name: Generate a token
       id: generate-token

@@ -4,9 +4,9 @@ kind: Kustomization
 namespace: $TARGET_NAMESPACE
 
 images:
-  - name: $AZURE_VOTE_IMAGE_REPOazure-vote-front
+  - name: $AZURE_VOTE_IMAGE_REPO/azure-vote-front
     newTag: $FRONTEND_IMAGE
-  - name: $AZURE_VOTE_IMAGE_REPOazure-vote-back
+  - name: $AZURE_VOTE_IMAGE_REPO/azure-vote-back
     newTag: $BACKEND_IMAGE
 resources:
   - manifests.yaml
