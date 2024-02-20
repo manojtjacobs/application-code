@@ -40,7 +40,7 @@ spec:
       - env:
         - name: ALLOW_EMPTY_PASSWORD
           value: "yes"
-        image: mtjacr001.azurecr.io/azure-vote-back:31ef93a75120fd8464110d027fef3fb091cd5a92
+        image: mtjacr001.azurecr.io/azure-vote-back:97482ee083c8bb0e551b63763ce22b9cce70c370
         name: azure-vote-back
         ports:
         - containerPort: 6379
@@ -69,7 +69,7 @@ spec:
           value: azure-vote-back
         - name: TITLE
           value: Voting Application
-        image: mtjacr001.azurecr.io/azure-vote-front:31ef93a75120fd8464110d027fef3fb091cd5a92
+        image: mtjacr001.azurecr.io/azure-vote-front:97482ee083c8bb0e551b63763ce22b9cce70c370
         name: azure-vote-front
         ports:
         - containerPort: 80
