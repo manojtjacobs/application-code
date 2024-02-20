@@ -5,8 +5,8 @@ namespace: dev
 
 images:
   - name: -vote-front
-    newTag: 49bc95cc1a3e5e27f2ea683c3d2c92ce77c81a69
+    newTag: 7a41ce51d92631316ba8d993d15e5651678bf735
   - name: -vote-back
-    newTag: 49bc95cc1a3e5e27f2ea683c3d2c92ce77c81a69
+    newTag: 7a41ce51d92631316ba8d993d15e5651678bf735
 resources:
   - manifests.yaml
