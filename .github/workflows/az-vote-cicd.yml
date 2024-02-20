@@ -181,7 +181,7 @@ jobs:
         pr_user_email="agent@gitops.com"
 
         pr_user_name="manojtjacobs"
-        pr_user_email="manjacob@microsoft.com.com"
+        pr_user_email="manjacob@microsoft.com"
 
         git config --global user.email $pr_user_email
         git config --global user.name $pr_user_name
