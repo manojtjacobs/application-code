@@ -132,7 +132,7 @@ jobs:
     - name: Create PR
       env:
         GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-        MANIFESTS_FOLDER: arc-cicd-cluster
+        MANIFESTS_FOLDER: arc-cicd-cluster-dev
         MANIFESTS_REPO: https://github.com/manojtjacobs/application-code
         MANIFESTS_BRANCH: master
         ENVIRONMENT_NAME: Dev
