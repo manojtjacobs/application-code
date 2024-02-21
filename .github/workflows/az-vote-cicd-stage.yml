@@ -1,5 +1,5 @@
 
-name: CI_CD_Dev
+name: CI_CD_Stage
 
 on:
   push:
@@ -68,22 +68,24 @@ jobs:
       with:
         name: image_tags
         path: ${{ github.workspace }}/image_tags
+
     - name: Upload Manifests Templates
       uses: actions/upload-artifact@v2.2.2
       with:
         name: manifests
         path: ${{ github.workspace }}/azure-vote/manifests
+
     - name: Upload Utils
       uses: actions/upload-artifact@v2.2.2
       with:
         name: utils
         path: ${{ github.workspace }}/utils
         
-  Deploy_to_Dev:
-    name: "Deploy to Dev"
+  Deploy_to_Stage:
+    name: "Deploy to Stage"
     runs-on: ubuntu-latest
     needs: Build_Push_Azure_Vote_App_Image
-    environment: az-vote-app-dev
+    environment: az-vote-app-stage
     steps:
     - name: Checkout
       uses: actions/checkout@v2.3.4
@@ -135,7 +137,7 @@ jobs:
         MANIFESTS_FOLDER: arc-cicd-cluster
         MANIFESTS_REPO: https://github.com/manojtjacobs/application-code
         MANIFESTS_BRANCH: master
-        ENVIRONMENT_NAME: Dev
+        ENVIRONMENT_NAME: Stage
       run: |
         echo "List input params"
         SOURCE_FOLDER=${{ github.workspace }}/gen_manifests
