@@ -4,9 +4,9 @@ kind: Kustomization
 namespace: dev
 
 images:
-  - name: -vote-front
-    newTag: 49bc95cc1a3e5e27f2ea683c3d2c92ce77c81a69
-  - name: -vote-back
-    newTag: 49bc95cc1a3e5e27f2ea683c3d2c92ce77c81a69
+  - name: mtjacr001.azurecr.io/azure-vote-front
+    newTag: 31ef93a75120fd8464110d027fef3fb091cd5a92
+  - name: mtjacr001.azurecr.io/azure-vote-back
+    newTag: 31ef93a75120fd8464110d027fef3fb091cd5a92
 resources:
   - manifests.yaml
