@@ -120,7 +120,6 @@ jobs:
         VOTE_APP_TITLE : "Voting Application"
         DEMO_APP_URL: ${{ secrets.DEMO_APP_URL }}
         AZURE_VOTE_IMAGE_REPO: ${{ secrets.AZ_ACR_NAME }}.azurecr.io/azvote${{ env.IMAGE_REPO_NAME }}
-        # AZURE_VOTE_IMAGE_REPO: mtjacr001.azurecr.io/${{ env.IMAGE_REPO_NAME }}
         SYSTEM_LABEL: ${{ secrets.SYSTEM_LABEL }}
 
     - name: Generate a token
@@ -167,8 +166,8 @@ jobs:
         pr_user_name="Git Ops"
         pr_user_email="agent@gitops.com"
 
-        pr_user_name="manojtjacobs"
-        pr_user_email="manjacob@microsoft.com"
+        # pr_user_name="manojtjacobs"
+        # pr_user_email="manjacob@microsoft.com"
 
         git config --global user.email $pr_user_email
         git config --global user.name $pr_user_name
@@ -199,21 +198,16 @@ jobs:
         git status
         if [[ `git status --porcelain | head -1` ]]; then
             git commit -m "deployment $DEPLOY_ID"
-            # repo_url=$DEST_REPO
             ls -l
             # Push to the deploy branch 
             echo "Push to the deploy branch $deploy_branch_name"
             echo "git push --set-upstream $repo_url $deploy_branch_name"
-            # repo_url="https://github.com/manojtjacobs/gitops-code.git"
             git push --set-upstream $repo_url $deploy_branch_name
             # Create a PR 
             echo "Create a PR to $DEST_BRANCH"
             
             owner_repo="${DEST_REPO#https://github.com/}"
             echo $owner_repo
-            # GITHUB_TOKEN=$TOKEN
-            # echo $GITHUB_TOKEN | gh auth login --with-token
-            # repo_url="https://github.com/manojtjacobs/gitops-code.git"
             gh pr create --base $DEST_BRANCH --head $deploy_branch_name --title "deployment '$DEPLOY_ID'" --body "Deploy to '$ENV_NAME'"
         fi 
 
